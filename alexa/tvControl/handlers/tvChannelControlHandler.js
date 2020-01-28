@@ -17,7 +17,7 @@ module.exports = function() {
     dynamoDb.query(params,(err, result) => {
         if (err || result.Count == 0) emit(':tell', "Channel was not found in dynamo db database");
         else {
-            request(`http://${process.env.HOME_IP}:3000/tv?command=${result.Items[0].number}`, (error, response, body) => {
+            request(`http://${process.env.HOME_IP}:30387/tv?command=${result.Items[0].number}`, (error, response, body) => {
                 if (!error) emit(':tell', "ok");
             });
         }
