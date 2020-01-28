@@ -1,0 +1,39 @@
+.temperature,
+.humidity {
+  font-size: 3em;
+}
+
+.particle {
+  flex-basis: 1;
+  font-size: 3em;
+  flex-direction: column;
+}
+
+.particle span {
+  flex-basis: 1;
+  width: 100%;
+}
+
+.particle .title {
+  font-size: 0.4em;
+}
+
+.great {
+  color: green;
+}
+
+.not_great {
+  color: rgb(185, 185, 40);
+}
+
+.not_great_not_terrible {
+  color: orange;
+}
+
+.terrible {
+  color: red;
+}
+
+.dark path {
+  fill: white;
+}

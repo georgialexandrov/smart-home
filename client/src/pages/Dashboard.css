@@ -1,0 +1,17 @@
+.titleBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.dark {
+  background: black;
+  color: white;
+  width: 100%;
+  height: 100vh;
+}
+
+.light {
+  background: white;
+  color: black;
+}
