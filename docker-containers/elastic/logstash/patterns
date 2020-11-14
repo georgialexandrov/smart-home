@@ -1,0 +1,11 @@
+MIKROTIK_DATE \b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b\/(?:(?:0[1-9])|(?:[12][0-9])|(?:3[01])|[1-9])
+MIKROTIK_TIME (?:2[0123]|[01]?[0-9]):(?:[0-5][0-9]):(?:(?:[0-5]?[0-9]|60)(?:[:.,][0-9]+)?)
+MIKROTIK_TOPIC wireless|info|ipsec|interface|error|dhcp|system|account|critical
+MIKROTIK_FAILED_PROPOSAL failed\ to\ get\ valid\ proposal|failed\ to\ pre\-process\ ph1\ packet|phase1\ negotiation\ failed|no\ suitable\ proposal\ found
+MIKROTIK_PEER_NOT_COMPLIANT Unity\ mode\ config\ request\ but\ the\ peer\ did\ not\ declare\ itself\ as\ \ unity\ compliant
+MIKROTIK_PACKET_RETRANSMISSION packet\ is\ retransmitted
+MIKROTIK_TRAFFIC_FLOW traffic\ flow\ target\ removed
+MIKROTIK_ACQUIRED_IP assigned|acquired
+MIKROTIK_RELEASED_IP released|releasing address|deassigned
+MIKROTIK_DISCO_REASON extensive\ data\ loss|group\ key\ exchange\ timeout|received\ deauth:\ unspecified\ \(1\)|received\ disassoc:\ sending station\ leaving\ \(8\)|ok|received\ deauth:\ sending\ station\ leaving\ \(3\)
+MIKROTIK_WIFI_STATE reassociating
