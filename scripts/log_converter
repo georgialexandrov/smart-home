@@ -1,0 +1,71 @@
+#!/home/georgi/.nvm/versions/node/v12.4.0/bin/node
+
+var http = require('http');
+var mqtt = require('mqtt');
+
+http.createServer(onRequest).listen(8888);
+
+function onRequest(req, res) {
+  var body = "";
+  req.on('data', function (chunk) {
+    body += chunk;
+  });
+  req.on('end', function () {
+
+    let data = JSON.parse(body);
+    let parsed = {
+      esp8266id: data.esp8266id,
+      software_version: data.software_version,
+      ...data.sensordatavalues.reduce((agg, curr) => Object.assign(agg, {
+        [`${curr.value_type}`]: curr.value
+      }), {}),
+      timestamp: Date.now(),
+      datetime: new Date()
+    }
+    parsed.pm10 = parseFloat(parsed.SDS_P1)
+    parsed.pm25 = parseFloat(parsed.SDS_P2)
+    parsed.BME280_pressure = (parseFloat(parsed.BME280_pressure) / 100).toFixed(2)
+    delete parsed.SDS_P1
+    delete parsed.SDS_P2
+
+    let postData = JSON.stringify(parsed)
+    var options = {
+      hostname: 'http://elastic.local',
+      port: 9200,
+      path: '/air-quality/esp',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    }
+
+    var elastic = http.request(options, (res) => {
+      res.setEncoding('utf8');
+    });
+
+    elastic.on('error', (e) => {
+      console.errpr(`problem with request: ${e.message}`);
+    });
+
+    // write data to request body
+    elastic.write(postData);
+    elastic.end;
+
+    console.log(data)
+    console.log(postData)
+    var client = mqtt.connect('mqtt://mqtt.local')
+    client.on('connect', function () {
+      client.publish('air-quality/temperature', "" + parsed.BME280_temperature)
+      client.publish('air-quality/humidity', "" + parsed.BME280_humidity)
+      client.publish('air-quality/pressure', "" + parsed.BME280_pressure)
+      client.publish('air-quality/pm10', "" + parsed.pm10)
+      client.publish('air-quality/pm25', "" + parsed.pm25)
+      client.publish('air-quality/datetime', "" + parsed.datetime)
+      client.publish('air-quality/update', postData)
+    })
+
+    res.writeHead(200);
+    res.end(body);
+  });
+}

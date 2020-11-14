@@ -1,0 +1,8 @@
+[Unit]
+Description=Air quality log converter script
+
+[Service]
+ExecStart=/home/georgi/log_converter
+
+[Install]
+WantedBy=multi-user.target
