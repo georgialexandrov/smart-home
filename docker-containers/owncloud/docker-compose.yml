@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  owncloud:
+    container_name: owncloud
+    image: owncloud:8.2
+    ports:
+      - "81:80"
+    networks:
+      - default
+    volumes:
+      - /data/ownCloud/data:/var/www/html/data
+    restart: unless-stopped
