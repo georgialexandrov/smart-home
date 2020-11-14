@@ -1,0 +1,48 @@
+esphome:
+  name: working_desk_esp
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: "****"
+  password: "****"
+
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.89.81
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.89.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Working Desk Esp"
+    password: "****"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+switch:
+  - platform: gpio
+    name: "Living Room Ambient LED"
+    pin: 12
+sensor:
+  - platform: dht
+    pin: 14
+    model: DHT11
+    temperature:
+      name: "Living Room Temperature"
+    humidity:
+      name: "Living Room Humidity"
+    update_interval: 60s
+binary_sensor:
+  - platform: gpio
+    pin: 13
+    name: "PIR Sensor"
+    device_class: motion
