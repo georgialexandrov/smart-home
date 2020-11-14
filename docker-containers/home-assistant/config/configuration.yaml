@@ -1,0 +1,49 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+#group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  broker: localhost
+  discovery: true
+  discovery_prefix: ambient
+
+homekit:
+shelly:
+  discover_by_ip:
+    - "192.168.89.90"
+sensor outside:
+  - platform: mqtt
+    name: "Temperature outside"
+    state_topic: "air-quality/temperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Humidity"
+    state_topic: "air-quality/humidity"
+    unit_of_measurement: "%"
+    icon: "mdi:water-percent"
+  - platform: mqtt
+    name: "Pressure"
+    state_topic: "air-quality/pressure"
+    unit_of_measurement: "hPa"
+    icon: "mdi:gauge"
+  - platform: mqtt
+    name: "PM 2.5"
+    state_topic: "air-quality/pm25"
+    unit_of_measurement: "µg/m³"
+  - platform: mqtt
+    name: "PM 10"
+    state_topic: "air-quality/pm10"
+    unit_of_measurement: "µg/m³"
+  - platform: mqtt
+    name: "Last updated"
+    state_topic: "air-quality/update"
+    icon: "mdi:calendar-clock"
+    value_template: "{{ as_timestamp(value_json.datetime) | timestamp_custom('%H:%M') }}"
